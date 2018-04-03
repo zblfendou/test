@@ -1,0 +1,4 @@
+dependencies {
+    compile project(':base')
+    compile 'net.unicon.cas:cas-client-autoconfig-support:1.5.0-GA'
+}

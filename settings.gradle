@@ -1,0 +1,13 @@
+rootProject.name = 'test'
+include 'base',
+        'service',
+        'dubboTest:dubboClient',
+        'dubboTest:dubboService',
+        'dynamicDataSource',
+        'aoptest',
+        'dynamicDataSource1',
+        'highlyConcurrent',
+        'singletonTest',
+        'restTest',
+        'redisTest',
+        'casClient'

@@ -1,0 +1,130 @@
+// 所有子项目的通用配置
+subprojects {
+    buildscript {
+        ext {
+            springBootVersion = '1.5.2.RELEASE'
+        }
+        repositories {
+            maven {
+                url 'http://localhost:8888/repository/internal'
+            }
+        }
+        dependencies {
+            classpath("org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}")
+        }
+    }
+    apply plugin: 'java'
+    apply plugin: 'idea'
+
+    version = '1.0'
+
+    // JVM 版本号要求
+    sourceCompatibility = 1.8
+    targetCompatibility = 1.8
+
+    // java编译的时候缺省状态下会因为中文字符而失败
+    [compileJava, compileTestJava, javadoc]*.options*.encoding = 'UTF-8'
+
+    //定义版本号
+    ext {
+        springVersion = '4.3.0.RELEASE'
+        hibernateVersion = '5.2.2.Final'
+    }
+
+    repositories {
+        mavenCentral()
+    }
+
+    jar {
+        manifest {
+            attributes("Implementation-Title": "Gradle")
+        }
+    }
+
+    configurations {
+        // 所有需要忽略的包定义在此
+        all*.exclude group: 'commons-httpclient'
+        all*.exclude group: 'commons-logging'
+        all*.exclude group: 'commons-beanutils', module: 'commons-beanutils'
+    }
+    //排除log4j与log4j12中方法冲突
+    configurations.all {
+        resolutionStrategy {
+
+            final $slf4j_version = '1.7.22'
+
+            eachDependency {
+                details ->
+                    if (details.requested.group == 'org.mockito' && details.requested.name == 'mockito-all')
+                        details.useTarget(name: 'mockito-core', group: details.requested.group, version: details.requested.version)
+                    else if (details.requested.group == 'commons-logging')
+                        details.useTarget 'org.slf4j:jcl-over-slf4j:' + $slf4j_version
+                    else if (details.requested.group == 'log4j')
+                        details.useTarget 'org.slf4j:log4j-over-slf4j:' + $slf4j_version
+                    else if (details.requested.group == 'org.jboss.netty' && details.requested.name == 'netty')
+                        details.useTarget 'io.netty:netty:3.10.4.Final'
+                    else if (details.requested.name == 'slf4j-log4j12')
+                        details.useTarget 'ch.qos.logback:logback-classic:1.1.9'
+                    else if (details.requested.group == 'org.slf4j')
+                        details.useVersion $slf4j_version
+            }
+        }
+    }
+
+    dependencies {
+        //数据库连接驱动
+        runtime('mysql:mysql-connector-java:5.1.40')
+        //spring-boot
+        compile('org.springframework.boot:spring-boot:' + springBootVersion)
+        compile('org.springframework.boot:spring-boot-starter-data-jpa:' + springBootVersion)
+        compile('org.springframework.boot:spring-boot-starter-web:' + springBootVersion)
+        compile('org.springframework:spring-context-support:4.3.8.RELEASE')
+        //redis
+        compile('org.springframework.boot:spring-boot-starter-data-redis:' + springBootVersion)
+        //持久化框架
+        compile('com.alibaba:druid:1.0.31')
+        compile('javax.inject:javax.inject:1')
+
+        compile('commons-io:commons-io:2.4')
+// https://mvnrepository.com/artifact/net.sf.json-lib/json-lib
+//        compile group: 'net.sf.json-lib', name: 'json-lib', version: '2.4'
+
+        // https://mvnrepository.com/artifact/org.apache.httpcomponents/httpclient
+        compile group: 'org.apache.httpcomponents', name: 'httpclient', version: '4.5'
+
+        //hibernate-jpa支持
+        compile('org.hibernate.javax.persistence:hibernate-jpa-2.1-api:1.0.0.Final')
+        //quartz 定时任务
+        compile('org.quartz-scheduler:quartz:2.2.3')
+        //commons-lang3
+        compile('org.apache.commons:commons-lang3:3.4')
+
+        //spring-boot测试
+        testCompile('org.springframework.boot:spring-boot-starter-test:' + springBootVersion)
+        testCompile('org.springframework.boot:spring-boot-test:' + springBootVersion)
+    }
+
+//        // 显示当前项目下所有用于 compile 的 jar.
+    task listJars(description: 'Display all compile jars.') << {
+        configurations.compile.each { File file -> println file.name }
+    }
+    jar {
+        String desc = 'pack package'
+        manifest {
+            attributes 'Main-Class': 'com.study.SpringbootApplication'
+            attributes 'Class-Path': desc
+        }
+    }
+
+    task copyJar(type: Copy) {
+        from configurations.runtime
+        into('build/libs/lib')
+
+    }
+
+    task release(type: Copy, dependsOn: [build, copyJar]) {
+    }
+
+    wrapper.gradleVersion = "4.0.2"
+    wrapper.distributionUrl = 'http://localhost:8888/repository/internal/gradle/gradle/4.0.2/gradle-4.0.2-all.zip'
+}
