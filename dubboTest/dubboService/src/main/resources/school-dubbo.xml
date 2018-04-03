@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:dubbo="http://code.alibabatech.com/schema/dubbo" xmlns="http://www.springframework.org/schema/beans"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd http://code.alibabatech.com/schema/dubbo http://code.alibabatech.com/schema/dubbo/dubbo.xsd">
+    <!-- dubbo 提供者的名称 -->
+    <dubbo:application name="${dubbo.application.name}"/>
+    <!-- zookeeper注册中心的地址 -->
+    <dubbo:registry protocol="zookeeper" address="${dubbo.registry.address}"/>
+    <!-- dubbo 提供者协议和端口 -->
+    <dubbo:protocol name="dubbo" port="${dubbo.protocol.port:20882}"/>
+    <dubbo:reference interface="com.dubbotest.client.service.ClazzService" id="clazzService">
+        <dubbo:method name="add" return="true" async="false" timeout="3000"></dubbo:method>
+    </dubbo:reference>
+</beans>
