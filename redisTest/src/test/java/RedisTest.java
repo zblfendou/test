@@ -82,7 +82,7 @@ public class RedisTest {
 
     @Test
     public void getRedis() {
-        String url = "http://localhost:8082/get.do?redisKey=zhangsanKey01";
+        String url = "http://localhost:8082/get.do?redisKey=zhangsanKey03";
         sendUrlAndReturn(url);
     }
 

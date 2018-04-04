@@ -18,12 +18,11 @@ import javax.inject.Named;
 public class RedisModelServiceImpl implements RedisModelService {
     @Inject
     private RedisModelDao dao;
-    private static final Logger logger = LoggerFactory.getLogger(RedisModelServiceImpl.class);
 
     @Override
     @Transactional
 //    @CachePut(value = RedisKeies.REDIS_MODEL, keyGenerator = "customGenerator",unless = "#redisModel eq null")
-    @CachePut(value = RedisKeies.REDIS_MODEL, key="#redisModel.redisKey",unless = "#redisModel eq null")
+    @CachePut(value = RedisKeies.REDIS_MODEL+"#30", key="#redisModel.redisKey",unless = "#redisModel eq null")//value 格式 name#expireTime说明设置缓存过期时间
     public RedisModel save(RedisModel redisModel) {
         return dao.save(redisModel);
     }

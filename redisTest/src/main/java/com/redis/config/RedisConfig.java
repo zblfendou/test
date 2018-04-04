@@ -24,9 +24,9 @@ import redis.clients.jedis.JedisPoolConfig;
 public class RedisConfig extends CachingConfigurerSupport {
     @Override
     public CacheManager cacheManager() {
-        RedisCacheManager cacheManager = new RedisCacheManager(getRedisTemplate());
-        cacheManager.setDefaultExpiration(20);//设置缓存过期时间 秒
-        return cacheManager;
+        /*RedisCacheManager cacheManager = new RedisCacheManager(getRedisTemplate());
+        cacheManager.setDefaultExpiration(20);//设置缓存过期时间 秒*/
+        return new CustomRedisCacheManager(getRedisTemplate());
     }
 
     /**
