@@ -27,4 +27,10 @@ public class RedisController {
     public RedisModel get(@RequestParam("redisKey") String redisKey) {
         return service.get(redisKey);
     }
+
+    @RequestMapping("/delete.do")
+    @ResponseBody
+    public void delete(@RequestParam("redisKey") String redisKey) {
+        service.delete(redisKey);
+    }
 }

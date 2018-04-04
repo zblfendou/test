@@ -22,7 +22,9 @@ import redis.clients.jedis.JedisPoolConfig;
 public class RedisConfig extends CachingConfigurerSupport {
     @Override
     public CacheManager cacheManager() {
-        return new RedisCacheManager(getRedisTemplate());
+        RedisCacheManager cacheManager = new RedisCacheManager(getRedisTemplate());
+        cacheManager.setDefaultExpiration(20);//设置缓存过期时间 秒
+        return cacheManager;
     }
 
     /**
@@ -30,7 +32,7 @@ public class RedisConfig extends CachingConfigurerSupport {
      * 包名+类名+方法名+所有参数
      */
     @Bean
-    public KeyGenerator wiselyKeyGenerator() {
+    public KeyGenerator customGenerator() {
         return (target, method, params) -> {
             StringBuilder builder = new StringBuilder();
             builder.append(target.getClass().getName());
@@ -38,7 +40,7 @@ public class RedisConfig extends CachingConfigurerSupport {
             for (Object obj : params) {
                 builder.append(obj.toString());
             }
-            return builder;
+            return builder.toString();
         };
     }
 

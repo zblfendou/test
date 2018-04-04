@@ -4,11 +4,13 @@ import com.redis.models.RedisModel;
 import com.redis.service.RedisModelService;
 import com.redis.service.dao.RedisModelDao;
 import com.redis.utils.RedisKeies;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.CachePut;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.transaction.annotation.Transactional;
 
-import javax.annotation.Resource;
 import javax.inject.Inject;
 import javax.inject.Named;
 
@@ -16,12 +18,13 @@ import javax.inject.Named;
 public class RedisModelServiceImpl implements RedisModelService {
     @Inject
     private RedisModelDao dao;
+    private static final Logger logger = LoggerFactory.getLogger(RedisModelServiceImpl.class);
 
     @Override
     @Transactional
-    @Cacheable(value = RedisKeies.REDIS_MODEL, keyGenerator = "wiselyKeyGenerator")
-    public void save(RedisModel redisModel) {
-        dao.save(redisModel);
+    @CachePut(value = RedisKeies.REDIS_MODEL, key = "#redisModel.redisKey",unless = "#redisModel eq null")
+    public RedisModel save(RedisModel redisModel) {
+        return dao.save(redisModel);
     }
 
     @Override
