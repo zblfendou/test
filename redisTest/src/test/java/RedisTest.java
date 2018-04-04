@@ -93,11 +93,11 @@ public class RedisTest {
     }
 
     @Test
-    public void manyThreadTest() {//测试缓存中aync属性 多线程访问时,如果aync设置true 则从数据库取一次数据 其他线程等待数据返回 ,然后取返回数据 .如果false则分别访问数据库
+    public void manyThreadTest() {//测试缓存中sync属性 多线程访问时,如果sync设置true 则从数据库取一次数据 其他线程等待数据返回 ,然后取返回数据 .如果false则分别访问数据库
         int number = 3;//线程数
         ExecutorService threadPool = Executors.newFixedThreadPool(number);
         List<Future<RedisModel>> results = new ArrayList<>();
-        String redisKey = "zhangsanKey01";
+        String redisKey = "zhangsanKey03";
         for (int i = 0; i < number; i++) {
             Future<RedisModel> future = threadPool.submit(new MyThread(redisKey));
             results.add(future);
