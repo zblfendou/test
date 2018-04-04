@@ -76,7 +76,7 @@ public class RedisTest {
 
     @Test
     public void saveRedis() {
-        String url = "http://localhost:8082/save.do?redisKey=zhangsanKey01&name=zbl&tel=1234&address=北京4";
+        String url = "http://localhost:8082/save.do?redisKey=zhangsanKey03&name=zbl&tel=1234&address=北京4";
         sendUrlAndReturn(url);
     }
 

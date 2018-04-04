@@ -22,7 +22,8 @@ public class RedisModelServiceImpl implements RedisModelService {
 
     @Override
     @Transactional
-    @CachePut(value = RedisKeies.REDIS_MODEL, key = "#redisModel.redisKey",unless = "#redisModel eq null")
+//    @CachePut(value = RedisKeies.REDIS_MODEL, keyGenerator = "customGenerator",unless = "#redisModel eq null")
+    @CachePut(value = RedisKeies.REDIS_MODEL, key="#redisModel.redisKey",unless = "#redisModel eq null")
     public RedisModel save(RedisModel redisModel) {
         return dao.save(redisModel);
     }

@@ -15,10 +15,12 @@ import org.springframework.data.redis.connection.jedis.JedisConnectionFactory;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.data.redis.serializer.Jackson2JsonRedisSerializer;
+import org.springframework.data.redis.serializer.JdkSerializationRedisSerializer;
+import org.springframework.data.redis.serializer.StringRedisSerializer;
 import redis.clients.jedis.JedisPoolConfig;
 
 @Configuration
-@EnableCaching
+@EnableCaching //启用缓存，这个注解很重要
 public class RedisConfig extends CachingConfigurerSupport {
     @Override
     public CacheManager cacheManager() {
@@ -68,10 +70,10 @@ public class RedisConfig extends CachingConfigurerSupport {
     //设置数据库存入redis的序列化方式
 
     private void initDomainRedisTemplate(RedisTemplate<String, Object> redisTemplate, JedisConnectionFactory connectionFactory) {
-//        redisTemplate.setKeySerializer(new StringRedisSerializer());
-//        redisTemplate.setHashKeySerializer(new StringRedisSerializer());
-//        redisTemplate.setHashValueSerializer(new StringRedisSerializer());
-//        redisTemplate.setValueSerializer(new JdkSerializationRedisSerializer());
+        redisTemplate.setKeySerializer(new StringRedisSerializer());
+        redisTemplate.setHashKeySerializer(new StringRedisSerializer());
+        redisTemplate.setHashValueSerializer(new StringRedisSerializer());
+        redisTemplate.setValueSerializer(new JdkSerializationRedisSerializer());
         redisTemplate.setConnectionFactory(connectionFactory);
     }
 }
