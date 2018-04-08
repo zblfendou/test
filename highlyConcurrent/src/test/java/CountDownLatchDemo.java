@@ -5,6 +5,9 @@ import java.util.concurrent.CountDownLatch;
 public class CountDownLatchDemo {
     final static SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 
+    //CountDownLatch类位于java.util.concurrent包下，利用它可以实现类似计数器的功能。
+    // 比如有一个任务A，它要等待其他4个任务执行完毕之后才能执行，
+    // 此时就可以利用CountDownLatch来实现这种功能了
     public static void main(String[] args) throws InterruptedException {
         CountDownLatch latch = new CountDownLatch(2);
         Worker worker1 = new Worker("zhang san", 5000, latch);
@@ -12,7 +15,7 @@ public class CountDownLatchDemo {
         worker1.start();
         worker2.start();
         latch.await();//等待所有工人完成工作
-        System.out.println("all work done at "+sdf.format(new Date()));
+        System.out.println("all work done at " + sdf.format(new Date()));
     }
 
     private static class Worker extends Thread {
@@ -33,9 +36,9 @@ public class CountDownLatchDemo {
                 doWork();//工作了
                 System.out.println("Worker " + workerName + " do work complete at " + sdf.format(new Date()));
             } finally {
-                System.out.println(workerName+" before count "+latch.getCount());
+                System.out.println(workerName + " before count " + latch.getCount());
                 latch.countDown();//工人完成工作，计数器减一
-                System.out.println(workerName+" after count "+latch.getCount());
+                System.out.println(workerName + " after count " + latch.getCount());
             }
         }
 
