@@ -9,7 +9,7 @@ public class AtomicTest {
 
     public static void main(String[] args) {
         final BlockingQueue<File> queue = new LinkedBlockingDeque<>(5000);
-        final ExecutorService exec = Executors.newFixedThreadPool(15);
+        final ExecutorService exec = Executors.newFixedThreadPool(8);
         final File root = new File("D:\\");
         final File exitFile = new File("");
         final AtomicInteger rc = new AtomicInteger();
@@ -40,7 +40,7 @@ public class AtomicTest {
             };
             exec.submit(read);
 
-        for (int index = 0; index < 10; index++) {
+        for (int index = 0; index < 7; index++) {
             final int num = index;
             final Runnable write = new Runnable() {
                 String threadName = "Write" + num;
