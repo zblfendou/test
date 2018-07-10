@@ -1,10 +1,12 @@
-import java.util.concurrent.*;
+import java.util.concurrent.CountDownLatch;
+import java.util.concurrent.LinkedBlockingQueue;
+import java.util.concurrent.ThreadPoolExecutor;
+import java.util.concurrent.TimeUnit;
 
 
-public class CyclicBarrierDemo {
+public class CountDownLatchDemo1 {
     private static final ThreadPoolExecutor threadPool = new ThreadPoolExecutor(4, 10, 60, TimeUnit.SECONDS, new LinkedBlockingQueue<Runnable>());
-    //当拦截线程数达到4时，便优先执行barrierAction，然后再执行被拦截的线程。
-    private static final CyclicBarrier cb = new CyclicBarrier(4, () -> System.out.println("寝室四兄弟一起出发去球场"));
+    private static CountDownLatch cdl = new CountDownLatch(4);
 
     private static class GoThread extends Thread {
         private final String name;
@@ -15,14 +17,15 @@ public class CyclicBarrierDemo {
 
         public void run() {
             System.out.println(name + "开始从宿舍出发");
+            cdl.countDown();
             try {
                 Thread.sleep(1000);
-                cb.await();
+                cdl.await();
                 System.out.println(name + "从楼底下出发");
                 Thread.sleep(1000);
                 System.out.println(name + "到达操场");
 
-            } catch (InterruptedException | BrokenBarrierException e) {
+            } catch (InterruptedException e) {
                 e.printStackTrace();
             }
 
@@ -57,7 +60,7 @@ public class CyclicBarrierDemo {
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
-
+        threadPool.shutdown();
 
     }
 }
