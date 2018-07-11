@@ -20,7 +20,9 @@
 
         isCancelled方法：判断计算是否被取消
 
-        一个FutureTask新建出来，state就是NEW状态；COMPETING和INTERRUPTING用的进行时，表示瞬时状态，存在时间极短(为什么要设立这种状态？？？不解)；NORMAL代表顺利完成；EXCEPTIONAL代表执行过程出现异常；CANCELED代表执行过程被取消；INTERRUPTED被中断
+        一个FutureTask新建出来，state就是NEW状态；COMPETING和INTERRUPTING用的进行时，表示瞬时状态
+            ，存在时间极短(为什么要设立这种状态？？？不解)；NORMAL代表顺利完成；EXCEPTIONAL代表执行过程出现异常；
+            CANCELED代表执行过程被取消；INTERRUPTED被中断
 
         2）执行过程顺利完成：NEW -> COMPLETING -> NORMAL
 
