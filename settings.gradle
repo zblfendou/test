@@ -10,4 +10,5 @@ include 'base',
         'singletonTest',
         'restTest',
         'redisTest',
-        'casClient'
+        'casClient',
+        'designMode'
