@@ -1,11 +1,14 @@
 package commandPattern;
 
+import lombok.extern.log4j.Log4j;
+
+@Log4j
 public class Light {
     public void openLight() {
-        System.out.println("开灯");
+        log.debug("开灯");
     }
 
     public void closeLight() {
-        System.out.println("关灯");
+        log.debug("关灯");
     }
 }

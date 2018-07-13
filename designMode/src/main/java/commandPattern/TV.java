@@ -1,11 +1,14 @@
 package commandPattern;
 
+import lombok.extern.log4j.Log4j;
+
+@Log4j
 public class TV {
     public void openTV() {
-        System.out.println("打开电视");
+        log.debug("打开电视");
     }
 
     public void closeTV() {
-        System.out.println("关闭电视");
+        log.debug("关闭电视");
     }
 }
