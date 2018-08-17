@@ -1,0 +1,4 @@
+dependencies {
+    compile group: 'com.belerweb', name: 'pinyin4j', version: '2.5.1'
+
+}
