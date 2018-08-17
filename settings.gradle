@@ -11,4 +11,5 @@ include 'base',
         'restTest',
         'redisTest',
         'casClient',
-        'designMode'
+        'designMode',
+        'seo'

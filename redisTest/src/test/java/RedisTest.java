@@ -12,6 +12,7 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.client.RestTemplate;
+import redis.clients.jedis.Jedis;
 
 import javax.inject.Inject;
 import java.util.ArrayList;
@@ -25,6 +26,12 @@ import java.util.concurrent.*;
 public class RedisTest {
     @Inject
     private RedisModelService service;
+
+    static Jedis jedis = null;
+
+    static {
+        jedis = new Jedis("192.168.80.135", 6379);
+    }
 
     @Test
     public void add() {
@@ -135,8 +142,15 @@ public class RedisTest {
         }
 
         @Override
-        public RedisModel call() throws Exception {
+        public RedisModel call() {
             return service.get(redisKey);
         }
+    }
+
+    public static void main(String[] args) {
+
+            jedis.set("name", "zb4l", "NX", "EX", 20);
+
+
     }
 }

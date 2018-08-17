@@ -10,7 +10,7 @@ public class AtomicTest {
     public static void main(String[] args) {
         final BlockingQueue<File> queue = new LinkedBlockingDeque<>(5000);
         final ExecutorService exec = Executors.newFixedThreadPool(8);
-        final File root = new File("D:\\");
+        final File root = new File("D:\\marketService\\zl\\seo文件\\1\\");
         final File exitFile = new File("");
         final AtomicInteger rc = new AtomicInteger();
         final AtomicInteger wc = new AtomicInteger();
@@ -23,7 +23,7 @@ public class AtomicTest {
 
                 private void scanFile(File file) {
                     if (file.isDirectory()) {
-                        final File[] files = file.listFiles(pathname -> pathname.isDirectory() || pathname.getPath().endsWith(".java"));
+                        final File[] files = file.listFiles(pathname -> pathname.isDirectory() || pathname.getPath().endsWith(".txt"));
                         for (File one : files != null ? files : new File[0]) {
                             scanFile(one);
                         }
