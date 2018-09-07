@@ -1,0 +1,4 @@
+create table Data (id bigint not null auto_increment, contentOne BLOB NULL, contentThree BLOB NULL, contentTwo BLOB NULL, dataID bigint not null, keyword varchar(255), taskID bigint not null, titleOne varchar(255), titleTwo varchar(255), primary key (id)) ENGINE=InnoDB;
+create table SeoAnswer (id bigint not null auto_increment, data TEXT NULL, initial char(1), keyWord varchar(255), version bigint not null, primary key (id)) ENGINE=InnoDB;
+create index IX_KEYWORD on SeoAnswer (keyWord);
+create index IX_INITIAL on SeoAnswer (initial);

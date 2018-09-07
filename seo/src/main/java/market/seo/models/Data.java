@@ -17,10 +17,13 @@ public class Data {
     private String titleOne;
     private String titleTwo;
     private String keyword;
-    @Column(columnDefinition = "BLOB NULL")
-    private byte[] contentOne;
-    @Column(columnDefinition = "BLOB NULL")
-    private byte[] contentTwo;
-    @Column(columnDefinition = "BLOB NULL")
-    private byte[] contentThree;
+    @Column(columnDefinition = "LONGTEXT NULL")
+    private String contentOne;
+    @Column(columnDefinition = "LONGTEXT NULL")
+    private String contentTwo;
+    @Column(columnDefinition = "LONGTEXT NULL")
+    private String contentThree;
+
+    private String contentHashCode;
+    private String titleHashCode;
 }

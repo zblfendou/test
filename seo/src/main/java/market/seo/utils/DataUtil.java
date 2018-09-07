@@ -70,6 +70,10 @@ public class DataUtil {
             boolean dataRight = (hasText(list.get(2)) || hasText(list.get(3)))
                     && (list.get(4).length() > 0 || list.get(5).length() > 0 || list.get(6).length() > 0)
                     && hasText(list.get(7));
+            int titleHashCode = (list.get(2) + list.get(3)).hashCode();
+            int contentHashCode = (list.get(4)+list.get(5)+list.get(6)).hashCode();
+            list.add(String.valueOf(titleHashCode));
+            list.add(String.valueOf(contentHashCode));
             if (dataRight) return list;
         }
         return null;
@@ -82,12 +86,11 @@ public class DataUtil {
         int fileCount = fileList.size();
         CountDownLatch countDownLatch = new CountDownLatch(fileCount);
         int nThreads = 10000;
-        ExecutorService executorService = Executors.newFixedThreadPool(9);
+        ExecutorService executorService = Executors.newFixedThreadPool(1000);
 
         List<Data> collect = new ArrayList<>();
         for (int i = 0; i < fileCount; i += nThreads) {
             for (int j = i; j < i + nThreads; j++) {
-                System.out.println(j);
                 if (j < fileCount) {
                     File file = fileList.get(j);
                     Future<Data> dataFuture = executorService.submit(() -> createData(file));
@@ -110,7 +113,9 @@ public class DataUtil {
 
     private static Data createData(File file) {
         String[] readToString = readToString(file);
+        assert readToString != null;
         List<String> list = split(readToString[0], readToString[1], readToString[2]);
+        if (list==null) System.out.println(file.getName());
         return list == null ? null : buildDataFromTxt(list);
     }
 
@@ -132,13 +137,15 @@ public class DataUtil {
         d.setTitleOne(dataList.get(2));
         d.setTitleTwo(dataList.get(3));
         String contentOne = dataList.get(4);
-        d.setContentOne(hasText(contentOne) ? contentOne.getBytes(UTF_8) : null);
+        d.setContentOne(contentOne);
         String contentTwo = dataList.get(5);
-        d.setContentTwo(hasText(contentTwo) ? contentTwo.getBytes(UTF_8) : null);
+        d.setContentTwo(contentTwo);
         String contentThree = dataList.get(6);
-        d.setContentThree(hasText(contentThree) ? contentThree.getBytes(UTF_8) : null);
+        d.setContentThree(contentThree);
         String keyword = dataList.get(7);
         d.setKeyword(keyword);
+        d.setTitleHashCode(dataList.get(8));
+        d.setContentHashCode(dataList.get(9));
         return d;
     }
 

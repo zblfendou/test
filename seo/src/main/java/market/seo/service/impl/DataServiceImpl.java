@@ -14,9 +14,11 @@ import org.springframework.util.StringUtils;
 
 import javax.inject.Inject;
 import javax.inject.Named;
+import java.io.UnsupportedEncodingException;
 import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;
 import java.util.*;
+import java.util.concurrent.CountDownLatch;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import java.util.stream.Collectors;
@@ -26,7 +28,6 @@ import static org.springframework.util.StringUtils.hasText;
 
 @Named
 public class DataServiceImpl implements DataService {
-    public static final Charset UTF_8 = StandardCharsets.UTF_8;
     @Inject
     private DataDao dataDao;
     @Inject
@@ -58,48 +59,51 @@ public class DataServiceImpl implements DataService {
         }).collect(Collectors.groupingBy(Data::getKeyword));
         Map<String, List<Data>> lastMap = new HashMap<>();
         listMap.forEach((k, v) -> {
-            if (v.size() < 30) return;
+            int vSize = v.size();
+            if (vSize < 30) return;
             List<Data> lastList = new ArrayList<>();
-            for (int j = 0; j < 30; j += 3) {
-                lastList.add(v.get(j));
+            List<String> titleHashCodes = new ArrayList<>();
+            List<String> contentHashCodes = new ArrayList<>();
+            for (int j = 0; j < vSize; j += 3) {
+                if (lastList.size() == 10) {
+                    System.out.println("listSize:" + lastList.size());
+                    lastMap.put(k, lastList);
+                    break;
+                }
+                Data data = v.get(j);
+                String titleHashCode = data.getTitleHashCode();
+                String contentHashCode = data.getContentHashCode();
+                if (!titleHashCodes.contains(titleHashCode) && !contentHashCodes.contains(contentHashCode)) {
+                    titleHashCodes.add(titleHashCode);
+                    contentHashCodes.add(contentHashCode);
+                    lastList.add(data);
+                }
             }
-            lastMap.put(k, lastList);
+
         });
         ArrayList<SeoAnswer> seoAnswers = new ArrayList<>();
         lastMap.forEach((keyWord, list) -> {
-            ArrayList<SeoDataVO> seoDataVOS = new ArrayList<>();
+            if (list.size() != 10) return;
+            List<SeoDataVO> seoDataVOS = new ArrayList<>();
             list.forEach(data -> {
                 String titleOne = data.getTitleOne();
                 String title = hasText(titleOne) ? titleOne : data.getTitleTwo();
-                byte[] contentOne = data.getContentOne();
-                byte[] contentTwo = data.getContentTwo();
-                String content = contentOne != null && contentOne.length > 0 ? new String(contentOne, UTF_8) : contentTwo != null && contentTwo.length > 0 ? new String(contentTwo, UTF_8) : new String(data.getContentThree(), UTF_8);
-                seoDataVOS.add(new SeoDataVO(title, content));
+                String contentOne = data.getContentOne();
+                String contentTwo = data.getContentTwo();
+                String content = hasText(contentOne) ? contentOne : hasText(contentTwo) ? contentTwo : data.getContentThree();
+                seoDataVOS.add(new SeoDataVO(title, content.replaceAll("<li", "<p").replaceAll("</li>", "</p>").replaceAll("<ul", "<p").replaceAll("</ul>", "</p>")));
             });
             try {
                 String initial = PinyinUtils.getPinYinFirstChart(keyWord);
                 String digit = getNumbers(keyWord);
-                if (StringUtils.hasText(digit)){
-                    System.out.println(initial+"  "+digit);
-                }
-                seoAnswers.add(new SeoAnswer(keyWord, initial, digit, objectMapper.writeValueAsString(seoDataVOS).getBytes(UTF_8)));
+                String data = objectMapper.writeValueAsString(seoDataVOS);
+                seoAnswers.add(new SeoAnswer(keyWord, initial, data));
             } catch (JsonProcessingException e) {
                 e.printStackTrace();
             }
         });
 
         seoAnswerDao.save(seoAnswers);
-
-        /*Set<String> keywords = dataDao.getAllDistinctKeyWords();
-        keywords.forEach(k->{
-            Stream<Data> dataStream = dataDao.getDataStream(k);
-            *//*AtomicInteger atomicInteger = new AtomicInteger();
-            dataStream.forEach(d->{
-                if (atomicInteger.getAndIncrement()%3==0&&){
-
-                }
-            });*//*
-        });*/
     }
 
     //截取数字
