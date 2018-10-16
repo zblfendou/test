@@ -31,7 +31,6 @@ public class test extends baseTester {
     private String scanFilePath5 = "D:\\marketService\\zl\\seo文件\\5\\";
 
     @Test
-    @Rollback(false)
     public void insertData() {
         /*String[] strings = { scanFilePath1*//*,scanFilePath2/*, scanFilePath3,scanFilePath4,  scanFilePath5*//*};
         ExecutorService executorService = Executors.newFixedThreadPool(5);

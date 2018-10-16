@@ -5,9 +5,7 @@ subprojects {
             springBootVersion = '1.5.2.RELEASE'
         }
         repositories {
-            maven {
-                url 'http://localhost:8888/repository/internal'
-            }
+            mavenCentral()
         }
         dependencies {
             classpath("org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}")
@@ -124,6 +122,6 @@ subprojects {
     task release(type: Copy, dependsOn: [build, copyJar]) {
     }
 
-    wrapper.gradleVersion = "4.0.2"
-    wrapper.distributionUrl = 'http://localhost:8888/repository/internal/gradle/gradle/4.0.2/gradle-4.0.2-all.zip'
+    wrapper.gradleVersion = "4.5.1"
+    wrapper.distributionUrl = 'http://services.gradle.org/distributions/gradle-4.5.1-all.zip'
 }

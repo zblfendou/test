@@ -25,6 +25,9 @@ public class SeoAnswer {
     @Column(columnDefinition = "LONGTEXT NULL")
     private String data;
 
+    public SeoAnswer() {
+    }
+
     public SeoAnswer(String keyWord, String initial, String data) {
         this.keyWord = keyWord;
         this.initial = initial;

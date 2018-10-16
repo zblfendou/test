@@ -138,7 +138,7 @@ public class RestTemplateDemoTest extends AbstractTest {
         System.out.println(String.format("X_API_SIGNATURE:%s", sign));
         //设置参数
         MultiValueMap<String, String> map = new LinkedMultiValueMap<>();
-//        map.add("productCode", "saas2018050921432");
+        map.add("productCode", "saas2018050921432");
         HttpEntity<MultiValueMap<String, String>> requestEntity = new HttpEntity<>(map, httpHeaders);
 
         //执行请求
