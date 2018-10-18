@@ -24,6 +24,7 @@ public class APP implements Serializable {
     private String downloadCount;//下载量
     private String qrCodeAddress;//二维码地址
     private String coverAddress;//封面地址
+    @Column(columnDefinition = "varchar(2000) NULL")
     private String describution;//简介
     private String logoAddress;
     @Column(columnDefinition = "LONGTEXT NULL")
