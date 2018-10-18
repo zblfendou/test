@@ -22,10 +22,13 @@ public class APP implements Serializable {
     private String score;
     private String classify;//分类
     private String downloadCount;//下载量
+    @Column(columnDefinition = "LONGTEXT NULL")
     private String qrCodeAddress;//二维码地址
+    @Column(columnDefinition = "LONGTEXT NULL")
     private String coverAddress;//封面地址
-    @Column(columnDefinition = "varchar(2000) NULL")
+    @Column(columnDefinition = "LONGTEXT NULL")
     private String describution;//简介
+    @Column(columnDefinition = "LONGTEXT NULL")
     private String logoAddress;
     @Column(columnDefinition = "LONGTEXT NULL")
     private String comment;
