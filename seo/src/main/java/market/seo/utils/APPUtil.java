@@ -1,9 +1,7 @@
 package market.seo.utils;
 
 import market.seo.models.APP;
-import market.seo.models.Data;
 import market.seo.service.AppService;
-import market.seo.service.DataService;
 
 import javax.inject.Inject;
 import javax.inject.Named;
@@ -143,7 +141,7 @@ public class APPUtil {
         app.setDownloadCount(dataList.get(5));
         app.setQrCodeAddress(dataList.get(6));
         app.setCoverAddress(dataList.get(7));
-        app.setDesc(dataList.get(8));
+        app.setDescribution(dataList.get(8));
         app.setLogoAddress(dataList.get(9));
         app.setLink(dataList.get(10));
         return app;
