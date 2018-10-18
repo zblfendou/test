@@ -10,7 +10,7 @@ import javax.inject.Inject;
 import java.io.IOException;
 
 @RunWith(SpringJUnit4ClassRunner.class)
-@SpringBootTest(classes = ServiceTesterConfig.class,webEnvironment = SpringBootTest.WebEnvironment.NONE)
+@SpringBootTest(classes = ServiceTesterConfig.class)
 @Transactional
 public class baseTester {
     @Inject
