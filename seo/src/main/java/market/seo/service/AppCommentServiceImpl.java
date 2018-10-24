@@ -18,4 +18,9 @@ public class AppCommentServiceImpl implements AppCommentService {
     public void save(List<AppComment> list) {
         dao.save(list);
     }
+
+    @Override
+    public AppComment getByApkName(String apkName) {
+        return dao.findByApkName(apkName);
+    }
 }

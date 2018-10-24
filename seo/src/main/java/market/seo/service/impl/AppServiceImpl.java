@@ -56,6 +56,7 @@ public class AppServiceImpl implements AppService {
                     Future<List<AppComment>> futures = executorService.submit(() -> processFile(new File(files.get(finalJ))));
                     List<AppComment> appComments = futures.get();
                     appCommentService.save(appComments);
+                    new File(files.get(j)).delete();
                 }
             } catch (InterruptedException | ExecutionException e) {
                 e.printStackTrace();
@@ -132,7 +133,6 @@ public class AppServiceImpl implements AppService {
     }
 
     private List<AppComment> processFile(File file) throws InterruptedException {
-        System.out.println("fileThread:>>" + Thread.currentThread().getName());
         String apkNameStrs = readToString(file);
         assert apkNameStrs != null;
         String[] apkNames = apkNameStrs.split(",");
@@ -146,14 +146,19 @@ public class AppServiceImpl implements AppService {
             for (int j = i; j < i + nThreads; j++) {
                 if (j < apkCounts) {
                     String apkName = apkNames[j];
-                    Future<AppComment> appCommentFuture = executorService.submit(() -> buildData(apkName));
-                    AppComment appComment = null;
-                    try {
-                        appComment = appCommentFuture.get();
-                    } catch (ExecutionException e) {
-                        e.printStackTrace();
+                    AppComment comment = appCommentService.getByApkName(apkName);
+                    if (comment != null) {
+                        System.out.println("已存在apkName:" + apkName);
+                    } else {
+                        Future<AppComment> appCommentFuture = executorService.submit(() -> buildData(apkName));
+                        AppComment appComment = null;
+                        try {
+                            appComment = appCommentFuture.get();
+                        } catch (ExecutionException e) {
+                            e.printStackTrace();
+                        }
+                        if (appComment != null) appComments.add(appComment);
                     }
-                    if (appComment != null) appComments.add(appComment);
                     countDownLatch.countDown();
                 }
             }
@@ -163,7 +168,6 @@ public class AppServiceImpl implements AppService {
     }
 
     private AppComment buildData(String apkName) {
-        System.out.println("apkThread >>" + Thread.currentThread().getName());
         String firstUrl = "https://sj.qq.com/myapp/app/comment.htm?";
         String page = "1";
         String contextData = "";

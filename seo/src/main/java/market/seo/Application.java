@@ -3,7 +3,8 @@ package market.seo;
 import lombok.extern.slf4j.Slf4j;
 import market.seo.service.AppService;
 import market.seo.service.DataService;
-import market.seo.utils.APPNewsUtil;
+import market.seo.utils.APPAnswerListUtil;
+import market.seo.utils.APPAnswerUtil;
 import market.seo.utils.APPUtil;
 import market.seo.utils.DataUtil;
 import org.springframework.boot.SpringApplication;
@@ -36,9 +37,16 @@ public class Application {
     private APPUtil appUtil;
     private String scanAPPFilePath = "D:\\marketService\\zl\\seo文件\\app\\详情页1-48000\\";
     @Inject
-    private APPNewsUtil appNewsUtil;
-    private String scanAPPNewsFilePath = "D:\\marketService\\zl\\seo文件\\app\\news\\";
+    private APPAnswerUtil appAnswerUtil;
+    private String scanAPPAnswerFilePath = "D:\\marketService\\zl\\seo文件\\APP问答\\APP问答\\";
+    @Inject
+    private APPAnswerListUtil appAnswerListUtil;
+    private String scanAPPAnswerListFilePath = "D:\\marketService\\zl\\seo文件\\APP问答\\列表\\";
 
+
+    /**
+     * seo问答
+     */
     @RequestMapping("/test")
     public String test() throws InterruptedException {
         long before = System.currentTimeMillis();
@@ -48,16 +56,20 @@ public class Application {
         return String.format("数据量为:%d条,共计耗时:%d", fileCount, (after - before) / 1000);
     }
 
+    /**
+     * seo app 评论
+     */
     @RequestMapping("/appcomment")
     public String appcomment() throws InterruptedException {
         long before = System.currentTimeMillis();
         appService.test();
-//        int fileCount = dataUtil.buildDataAndSave(scanFilePath);
         long after = System.currentTimeMillis();
-//        return String.format("数据量为:%d条,共计耗时:%d", fileCount, (after - before) / 1000);
-        return "";
+        return String.format("共计耗时:%d", (after - before) / 1000);
     }
 
+    /**
+     * seo app 应用
+     */
     @RequestMapping("/saveApps")
     public String saveApps() throws InterruptedException {
         long before = System.currentTimeMillis();
@@ -66,10 +78,24 @@ public class Application {
         return String.format("数据量为:%d条,共计耗时:%d", fileCount, (after - before) / 1000);
     }
 
-    @RequestMapping("/saveAppNews")
-    public String saveAppNews() throws InterruptedException {
+    /**
+     * seo app 应用
+     */
+    @RequestMapping("/saveAppAnswer")
+    public String saveAppAnswers() throws InterruptedException {
         long before = System.currentTimeMillis();
-        int fileCount = appNewsUtil.buildAPPAndSave(scanAPPNewsFilePath);
+        int fileCount = appAnswerUtil.buildAPPAnswerAndSave(scanAPPAnswerFilePath);
+        long after = System.currentTimeMillis();
+        return String.format("数据量为:%d条,共计耗时:%d", fileCount, (after - before) / 1000);
+    }
+
+    /**
+     * seo app 问答 list
+     */
+    @RequestMapping("/saveAppAnswerList")
+    public String saveAppAnswerLists() throws InterruptedException {
+        long before = System.currentTimeMillis();
+        int fileCount = appAnswerListUtil.buildAPPAnswerAndSave(scanAPPAnswerListFilePath);
         long after = System.currentTimeMillis();
         return String.format("数据量为:%d条,共计耗时:%d", fileCount, (after - before) / 1000);
     }

@@ -6,4 +6,6 @@ import java.util.List;
 
 public interface AppCommentService {
     void save(List<AppComment> list);
+
+    AppComment getByApkName(String apkName);
 }

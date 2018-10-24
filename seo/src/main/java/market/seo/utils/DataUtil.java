@@ -20,7 +20,7 @@ import static java.nio.charset.StandardCharsets.UTF_8;
 import static org.springframework.util.StringUtils.hasText;
 
 /**
- * 读取txt文件并将文件内容拼接成sql语句
+ * 问答
  */
 @Named
 public class DataUtil {
