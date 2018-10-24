@@ -6,4 +6,6 @@ import java.util.List;
 
 public interface APPAnswerService {
     void save(List<APPAnswer> list);
+
+    void fillKeywordFromAppAnswerList();
 }

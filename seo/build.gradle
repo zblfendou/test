@@ -1,3 +1,18 @@
-dependencies {
-    compile group: 'com.belerweb', name: 'pinyin4j', version: '2.5.1'
+apply plugin: 'idea'
+apply plugin: 'java'
+apply plugin: 'spring-boot'
+jar {
+    baseName = 'seo'
+    version = ''
+    manifest {
+        attributes "Manifest-Version": 1.0,
+                'Main-Class': 'market.seo.Application'
+    }
 }
+
+dependencies {
+    compile group   : 'com.belerweb', name: 'pinyin4j', version: '2.5.1'
+}
+
+
+

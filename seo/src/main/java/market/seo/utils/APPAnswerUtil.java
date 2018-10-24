@@ -129,8 +129,8 @@ public class APPAnswerUtil {
 
     private static APPAnswer buildDataFromTxt(List<String> dataList) {
         APPAnswer answer = new APPAnswer();
-        answer.setKeyword(dataList.get(4));
-//        answer.setTitle(hasText(dataList.get(2)) ? dataList.get(2) : dataList.get(6));
+//        answer.setKeyword(dataList.get(4));
+        answer.setTitle(hasText(dataList.get(2)) ? dataList.get(2) : dataList.get(6));
         answer.setContent(hasText(dataList.get(3)) ? dataList.get(3) : hasText(dataList.get(5)) ? dataList.get(5) : dataList.get(7));
         answer.setUrlHashCode(hasText(dataList.get(8)) ? dataList.get(8).hashCode() : 0);
         return answer;

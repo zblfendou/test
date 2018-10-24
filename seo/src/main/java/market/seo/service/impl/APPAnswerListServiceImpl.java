@@ -19,4 +19,9 @@ public class APPAnswerListServiceImpl implements APPAnswerListService {
     public void save(List<APPAnswerList> list) {
         dao.save(list);
     }
+
+    @Override
+    public List<APPAnswerList> getAll() {
+        return dao.findAll();
+    }
 }

@@ -6,4 +6,6 @@ import java.util.List;
 
 public interface APPAnswerListService {
     void save(List<APPAnswerList> list);
+
+    List<APPAnswerList> getAll();
 }
