@@ -30,7 +30,7 @@ public class APPAnswerListServiceImpl implements APPAnswerListService {
     public void changeUrlToHashCode() {
         List<APPAnswerList> all = dao.findAll();
         all.forEach(li -> {
-            li.setList(li.getList().stream().map(li_ -> String.valueOf(li_.hashCode())).collect(Collectors.toList()));
+            li.setList(li.getList().stream().map(Object::hashCode).collect(Collectors.toList()));
             dao.save(li);
         });
     }

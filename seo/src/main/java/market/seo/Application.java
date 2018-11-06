@@ -110,7 +110,7 @@ public class Application {
      * seo app 问答 list
      */
     @RequestMapping("/fillKeywordFromAppAnswerList")
-    public String fillKeywordFromAppAnswerList() throws InterruptedException {
+    public String fillKeywordFromAppAnswerList() {
         long before = System.currentTimeMillis();
         appAnswerService.fillKeywordFromAppAnswerList();
         long after = System.currentTimeMillis();
@@ -119,7 +119,7 @@ public class Application {
      * seo app 问答 list
      */
     @RequestMapping("/changeUrlToHashCode_list")
-    public String changeUrlToHashCode_list() throws InterruptedException {
+    public String changeUrlToHashCode_list() {
         long before = System.currentTimeMillis();
         appAnswerListService.changeUrlToHashCode();
         long after = System.currentTimeMillis();

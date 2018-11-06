@@ -32,7 +32,7 @@ public class APPAnswerServiceImpl implements APPAnswerService {
         List<APPAnswer> answers = dao.findAll();
         List<APPAnswerList> lists = listService.getAll();
         for (APPAnswer a : answers) {
-            String urlHashCode = a.getUrl();
+            String urlHashCode = String.valueOf(a.getUrlHashCode());
             for (APPAnswerList li : lists) {
                 if (li.getList().contains(urlHashCode)) {
                     String keyword = li.getKeyword();
