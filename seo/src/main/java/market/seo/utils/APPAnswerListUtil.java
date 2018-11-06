@@ -1,6 +1,5 @@
 package market.seo.utils;
 
-import market.seo.models.APPAnswer;
 import market.seo.models.APPAnswerList;
 import market.seo.service.APPAnswerListService;
 

@@ -17,11 +17,10 @@ public class APPAnswer implements Serializable {
     @Version
     @JsonIgnore
     private long version;
-    @Column(columnDefinition = "varchar(2000) NULL")
     private String keyword;
     @Column(columnDefinition = "LONGTEXT NULL")
     private String title;
-    private int urlHashCode;
+    private Integer urlHashCode;
     @Column(columnDefinition = "LONGTEXT NULL")
     private String content;
 }

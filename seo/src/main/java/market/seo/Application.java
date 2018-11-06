@@ -1,6 +1,8 @@
 package market.seo;
 
 import lombok.extern.slf4j.Slf4j;
+import market.seo.service.APPAnswerListService;
+import market.seo.service.APPAnswerService;
 import market.seo.service.AppService;
 import market.seo.service.DataService;
 import market.seo.utils.APPAnswerListUtil;
@@ -42,6 +44,10 @@ public class Application {
     @Inject
     private APPAnswerListUtil appAnswerListUtil;
     private String scanAPPAnswerListFilePath = "D:\\marketService\\zl\\seo文件\\APP问答\\列表\\";
+    @Inject
+    private APPAnswerService appAnswerService;
+    @Inject
+    private APPAnswerListService appAnswerListService;
 
 
     /**
@@ -100,6 +106,25 @@ public class Application {
         return String.format("数据量为:%d条,共计耗时:%d", fileCount, (after - before) / 1000);
     }
 
+ /**
+     * seo app 问答 list
+     */
+    @RequestMapping("/fillKeywordFromAppAnswerList")
+    public String fillKeywordFromAppAnswerList() throws InterruptedException {
+        long before = System.currentTimeMillis();
+        appAnswerService.fillKeywordFromAppAnswerList();
+        long after = System.currentTimeMillis();
+        return String.format("共计耗时:%d", (after - before) / 1000);
+    } /**
+     * seo app 问答 list
+     */
+    @RequestMapping("/changeUrlToHashCode_list")
+    public String changeUrlToHashCode_list() throws InterruptedException {
+        long before = System.currentTimeMillis();
+        appAnswerListService.changeUrlToHashCode();
+        long after = System.currentTimeMillis();
+        return String.format("共计耗时:%d", (after - before) / 1000);
+    }
 
     public static void main(String[] args) {
         SpringApplication.run(Application.class, args);
