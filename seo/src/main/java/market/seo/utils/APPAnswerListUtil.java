@@ -1,6 +1,5 @@
 package market.seo.utils;
 
-import market.seo.models.APPAnswer;
 import market.seo.models.APPAnswerList;
 import market.seo.service.APPAnswerListService;
 
@@ -62,7 +61,10 @@ public class APPAnswerListUtil {
             String splitContent = content.substring(urlStartIndex, urlEndIndex);
             if (splitContent.length() > 0) {
                 String[] urlArrays = splitContent.split(" ###【分URL结束】【分URL开始】");
-                Arrays.stream(urlArrays).forEach(url -> list.add(String.valueOf(url.hashCode())));
+                Arrays.stream(urlArrays).forEach(url -> {
+                    if (url.contains("【分URL结束】【分URL开始】")) url = url.replaceAll("【分URL结束】【分URL开始】", "");
+                    list.add(String.valueOf(url.trim().hashCode()));
+                });
                 return list;
             }
         }
@@ -99,6 +101,12 @@ public class APPAnswerListUtil {
         countDownLatch.await();
 
         return fileCount;
+    }
+
+    public static void main(String[] args) {
+        String fileurl = "D:\\marketService\\zl\\seo文件\\APP问答\\列表\\【27931】APP问答 - 关键词及URL获取规则.txt";
+        APPAnswerList data = createData(new File(fileurl));
+        System.out.println(data);
     }
 
     private static APPAnswerList createData(File file) {
