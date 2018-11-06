@@ -8,4 +8,6 @@ public interface APPAnswerListService {
     void save(List<APPAnswerList> list);
 
     List<APPAnswerList> getAll();
+
+    void changeUrlToHashCode();
 }

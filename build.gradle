@@ -98,7 +98,7 @@ subprojects {
         //commons-lang3
         compile('org.apache.commons:commons-lang3:3.4')
         //lombok
-        compile('org.projectlombok:lombok:1.18.0')
+        compile('org.projectlombok:lombok:1.18.2')
 
         //spring-boot测试
         testCompile('org.springframework.boot:spring-boot-starter-test:' + springBootVersion)

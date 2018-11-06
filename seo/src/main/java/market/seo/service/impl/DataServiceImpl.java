@@ -48,6 +48,7 @@ public class DataServiceImpl implements DataService {
     }
 
     @Override
+    @Transactional
     public void washDataAndSaveSeoAnswers() {
         Stream<Data> stream = dataDao.getDataStream();
         Map<String, List<Data>> listMap = stream.filter(d -> {

@@ -5,6 +5,7 @@ import market.seo.daos.AppCommentDao;
 import market.seo.models.AppComment;
 import market.seo.service.AppCommentService;
 import org.junit.Test;
+import org.springframework.http.ResponseEntity;
 import org.springframework.test.annotation.Rollback;
 import org.springframework.util.StringUtils;
 import org.springframework.web.client.RestTemplate;
@@ -19,6 +20,7 @@ import java.io.*;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Map;
 import java.util.concurrent.*;
 import java.util.stream.Collectors;
 public class AppTest extends baseTester {
@@ -28,6 +30,14 @@ public class AppTest extends baseTester {
     private ObjectMapper objectMapper;
     @Inject
     private AppCommentService appCommentService;
+
+    @Test
+    public void aaaa() {
+        String url = "http://box.xinnet.com/yaxin/api.do?amount=1年&specName=域名型OV_SSL证书 1年&serviceCode=201811021637512379&specCode=TrueBizID&agentCode=hy5192032&action=newOpen&manyDomain=单域名&sign=8b32be8668b67d98f3488158d72ed414";
+        ResponseEntity<Map> forEntity = restTemplate.getForEntity(url, Map.class);
+        System.out.println(forEntity);
+    }
+
 
     @Test
     @Rollback(false)
