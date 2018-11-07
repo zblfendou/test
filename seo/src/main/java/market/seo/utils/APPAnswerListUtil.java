@@ -63,7 +63,7 @@ public class APPAnswerListUtil {
                 String[] urlArrays = splitContent.split(" ###【分URL结束】【分URL开始】");
                 Arrays.stream(urlArrays).forEach(url -> {
                     if (url.contains("【分URL结束】【分URL开始】")) url = url.replaceAll("【分URL结束】【分URL开始】", "");
-                    list.add(String.valueOf(url.trim().hashCode()));
+                    list.add(url.trim());
                 });
                 return list;
             }
@@ -132,7 +132,7 @@ public class APPAnswerListUtil {
         APPAnswerList answerList = new APPAnswerList();
         answerList.setKeyword(dataList.get(2));
         List<String> list = dataList.subList(3, dataList.size());
-        answerList.setList(list.stream().map(Integer::parseInt).collect(Collectors.toList()));
+        answerList.setList(list);
         return answerList;
     }
 

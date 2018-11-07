@@ -9,5 +9,4 @@ public interface APPAnswerListService {
 
     List<APPAnswerList> getAll();
 
-    void changeUrlToHashCode();
 }

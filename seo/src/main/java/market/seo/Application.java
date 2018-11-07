@@ -115,15 +115,6 @@ public class Application {
         appAnswerService.fillKeywordFromAppAnswerList();
         long after = System.currentTimeMillis();
         return String.format("共计耗时:%d", (after - before) / 1000);
-    } /**
-     * seo app 问答 list
-     */
-    @RequestMapping("/changeUrlToHashCode_list")
-    public String changeUrlToHashCode_list() {
-        long before = System.currentTimeMillis();
-        appAnswerListService.changeUrlToHashCode();
-        long after = System.currentTimeMillis();
-        return String.format("共计耗时:%d", (after - before) / 1000);
     }
 
     public static void main(String[] args) {

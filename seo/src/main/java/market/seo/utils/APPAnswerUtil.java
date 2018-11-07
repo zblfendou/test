@@ -131,7 +131,7 @@ public class APPAnswerUtil {
         APPAnswer answer = new APPAnswer();
         answer.setTitle(hasText(dataList.get(2)) ? dataList.get(2) : dataList.get(6));
         answer.setContent(hasText(dataList.get(3)) ? dataList.get(3) : hasText(dataList.get(5)) ? dataList.get(5) : dataList.get(7));
-        answer.setUrlHashCode(hasText(dataList.get(8)) ? dataList.get(8).trim().hashCode() : null);
+        answer.setUrlHashCode(hasText(dataList.get(8)) ? dataList.get(8).trim() : null);
         return answer;
     }
 

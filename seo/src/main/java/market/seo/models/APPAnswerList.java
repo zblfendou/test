@@ -20,5 +20,6 @@ public class APPAnswerList implements Serializable {
     private long version;
     private String keyword;
     @ElementCollection(fetch = FetchType.EAGER)
-    private List<Integer> list;
+    @Column(columnDefinition = "text null")
+    private List<String> list;
 }

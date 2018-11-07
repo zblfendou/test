@@ -26,12 +26,4 @@ public class APPAnswerListServiceImpl implements APPAnswerListService {
         return dao.findAll();
     }
 
-    @Override
-    public void changeUrlToHashCode() {
-        List<APPAnswerList> all = dao.findAll();
-        all.forEach(li -> {
-            li.setList(li.getList().stream().map(Object::hashCode).collect(Collectors.toList()));
-            dao.save(li);
-        });
-    }
 }

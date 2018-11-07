@@ -20,7 +20,8 @@ public class APPAnswer implements Serializable {
     private String keyword;
     @Column(columnDefinition = "LONGTEXT NULL")
     private String title;
-    private Integer urlHashCode;
+    @Column(columnDefinition = "text null")
+    private String urlHashCode;
     @Column(columnDefinition = "LONGTEXT NULL")
     private String content;
 }
